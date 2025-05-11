@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import team.idealstate.minecraft.next.spigot.api.placeholder.Placeholder;
+import team.idealstate.minecraft.next.spigot.configuration.ExampleConfiguration;
 import team.idealstate.sugar.banner.Banner;
 import team.idealstate.sugar.logging.Log;
 import team.idealstate.sugar.next.command.Command;
@@ -35,9 +36,11 @@ import team.idealstate.sugar.next.command.annotation.CommandHandler;
 import team.idealstate.sugar.next.command.exception.CommandArgumentConversionException;
 import team.idealstate.sugar.next.context.ContextHolder;
 import team.idealstate.sugar.next.context.annotation.component.Controller;
+import team.idealstate.sugar.next.context.annotation.feature.Autowired;
 import team.idealstate.sugar.next.context.annotation.feature.Environment;
 import team.idealstate.sugar.next.context.annotation.feature.Named;
 import team.idealstate.sugar.next.context.aware.ContextHolderAware;
+import team.idealstate.sugar.validate.Validation;
 import team.idealstate.sugar.validate.annotation.NotNull;
 
 @Named("minecraftnext")
@@ -48,7 +51,7 @@ public class ExampleController implements ContextHolderAware, Command, Placehold
     @CommandHandler
     public CommandResult show() {
         Log.info("show()");
-        return CommandResult.success();
+        return CommandResult.success(getConfiguration().toString());
     }
 
     @CommandHandler("show {message}")
@@ -115,5 +118,15 @@ public class ExampleController implements ContextHolderAware, Command, Placehold
     @Override
     public void setContextHolder(@NotNull ContextHolder contextHolder) {
         this.contextHolder = contextHolder;
+    }
+
+    private volatile ExampleConfiguration configuration;
+    @Autowired
+    public void setConfiguration(@NotNull ExampleConfiguration configuration) {
+        this.configuration = configuration;
+    }
+    @NotNull
+    private ExampleConfiguration getConfiguration() {
+        return Validation.requireNotNull(configuration, "Configuration must not be null.");
     }
 }

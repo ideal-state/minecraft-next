@@ -1,0 +1,33 @@
+aByte: 1
+aShort: 2
+aInt: 123
+aLong: 123456
+aFloat: 1.23
+aDouble: 1.23
+aBool: true
+aChar: 'a'
+aString: "abc"
+aEnum: FIRST
+aArray:
+- 1
+- 2
+- 3
+aList:
+- 1
+- 2
+- 3
+- 4
+- 5
+- 6
+aSet:
+- only one
+- only one
+- only one
+- only one
+- only one
+- only one
+aMap:
+  a: 1
+  b: "2"
+  c:
+    c1: '3'
