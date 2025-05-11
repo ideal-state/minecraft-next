@@ -1,32 +1,32 @@
-aByte: 1
-aShort: 2
-aInt: 123
-aLong: 123456
-aFloat: 1.23
-aDouble: 1.23
-aBool: true
-aChar: 'a'
-aString: "abc"
-aEnum: FIRST
-aArray:
+oneByte: 1
+oneShort: 2
+oneInt: 123
+oneLong: 123456
+oneFloat: 1.23
+oneDouble: 1.23
+oneBoolean: true
+oneChar: 'a'
+oneString: "abc"
+oneEnum: FIRST
+oneArray:
 - 1
 - 2
 - 3
-aList:
+oneList:
 - 1
 - 2
 - 3
 - 4
 - 5
 - 6
-aSet:
+oneSet:
 - only one
 - only one
 - only one
 - only one
 - only one
 - only one
-aMap:
+oneMap:
   a: 1
   b: "2"
   c:

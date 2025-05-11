@@ -19,33 +19,33 @@ import java.util.Set;
 public class ExampleConfiguration {
 
     @NonNull
-    private Byte aByte;
+    private Byte oneByte;
     @NonNull
-    private Short aShort;
+    private Short oneShort;
     @NonNull
-    private Integer aInt;
+    private Integer oneInt;
     @NonNull
-    private Long aLong;
+    private Long oneLong;
     @NonNull
-    private Float aFloat;
+    private Float oneFloat;
     @NonNull
-    private Double aDouble;
+    private Double oneDouble;
     @NonNull
-    private Character aChar;
+    private Character oneChar;
     @NonNull
-    private Boolean aBoolean;
+    private Boolean oneBoolean;
     @NonNull
-    private String aString;
+    private String oneString;
     @NonNull
-    private ExampleEnum aEnum;
+    private ExampleEnum oneEnum;
     @NonNull
-    private Object[] aArray;
+    private Object[] oneArray;
     @NonNull
-    private List<Integer> aList;
+    private List<Integer> oneList;
     @NonNull
-    private Set<String> aSet;
+    private Set<String> oneSet;
     @NonNull
-    private Map<String, Object> aMap;
+    private Map<String, Object> oneMap;
 
     public enum ExampleEnum {
         FIRST, SECOND
