@@ -1,3 +1,11 @@
+glass {
+    application {
+        sugar {
+            into.set("./plugins/")
+        }
+    }
+}
+
 repositories {
     maven {
         name = "spigotmc-repo"
