@@ -31,6 +31,6 @@ public class ExampleSubscriber implements Listener {
 
     @EventHandler
     public void onCommand(ServerCommandEvent event) {
-        Log.debug(() -> String.format("Received command: %s, Sender: %s", event.getCommand(), event.getSender()));
+        Log.info(String.format("Received command: %s, Sender: %s", event.getCommand(), event.getSender()));
     }
 }
