@@ -19,15 +19,9 @@
 package team.idealstate.minecraft.next.spigot;
 
 import team.idealstate.minecraft.next.spigot.api.SpigotPlugin;
-import team.idealstate.sugar.next.boot.hikaricp.annotation.EnableHikariCP;
-import team.idealstate.sugar.next.boot.jedis.annotation.EnableJedis;
-import team.idealstate.sugar.next.boot.mybatis.annotation.EnableMyBatis;
 import team.idealstate.sugar.next.context.Context;
 import team.idealstate.sugar.validate.annotation.NotNull;
 
-@EnableHikariCP
-@EnableJedis
-@EnableMyBatis
 public final class MinecraftNext extends SpigotPlugin {
     @Override
     public void onInitialize(@NotNull Context context) {}

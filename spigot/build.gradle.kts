@@ -26,7 +26,7 @@ dependencies {
 tasks.processResources {
     val props =
         mapOf(
-            "name" to project.name,
+            "name" to rootProject.name,
             "version" to project.version,
         )
     filesMatching(listOf("plugin.yml")) {
