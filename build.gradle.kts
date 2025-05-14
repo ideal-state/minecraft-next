@@ -70,6 +70,7 @@ subprojects {
         add("api", rootProject.libs.sugar.next.hikaricp.boot)
         add("api", rootProject.libs.sugar.next.jedis.boot)
         add("api", rootProject.libs.sugar.next.mybatis.boot)
+        add("api", rootProject.libs.sugar.next.jedis.mybatis.cache.boot)
 
         add("runtimeOnly", rootProject.libs.h2)
 

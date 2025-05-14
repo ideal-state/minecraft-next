@@ -3,8 +3,9 @@ jreleaser = "1.18.0"
 lombok = "1.18.38"
 sugar-next = "0.1.0-SNAPSHOT"
 sugar-next-hikaricp-boot = "0.1.0-SNAPSHOT"
-sugar-next-mybatis-boot = "0.1.0-SNAPSHOT"
 sugar-next-jedis-boot = "0.1.0-SNAPSHOT"
+sugar-next-mybatis-boot = "0.1.0-SNAPSHOT"
+sugar-next-jedis-mybatis-cache-boot = "0.1.0-SNAPSHOT"
 spigot-api = "1.12.2-R0.1-SNAPSHOT"
 placeholderapi = "2.11.6"
 h2 = "2.2.222"
@@ -16,8 +17,9 @@ jreleaser = { id = "org.jreleaser", version.ref = "jreleaser" }
 lombok = { group = "org.projectlombok", name = "lombok", version.ref = "lombok" }
 sugar-next = { group = "team.idealstate.sugar", name = "sugar-next", version.ref = "sugar-next" }
 sugar-next-hikaricp-boot = { group = "team.idealstate.sugar.boot", name = "sugar-next-hikaricp-boot", version.ref = "sugar-next-hikaricp-boot" }
-sugar-next-mybatis-boot = { group = "team.idealstate.sugar.boot", name = "sugar-next-mybatis-boot", version.ref = "sugar-next-mybatis-boot" }
 sugar-next-jedis-boot = { group = "team.idealstate.sugar.boot", name = "sugar-next-jedis-boot", version.ref = "sugar-next-jedis-boot" }
+sugar-next-mybatis-boot = { group = "team.idealstate.sugar.boot", name = "sugar-next-mybatis-boot", version.ref = "sugar-next-mybatis-boot" }
+sugar-next-jedis-mybatis-cache-boot = { group = "team.idealstate.sugar.boot", name = "sugar-next-jedis-mybatis-cache-boot", version.ref = "sugar-next-jedis-mybatis-cache-boot" }
 spigot-api = { group = "org.spigotmc", name = "spigot-api", version.ref = "spigot-api" }
 placeholderapi = { group = "me.clip", name = "placeholderapi", version.ref = "placeholderapi" }
 h2 = { group = "com.h2database", name = "h2", version.ref = "h2" }

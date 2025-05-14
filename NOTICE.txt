@@ -42,6 +42,12 @@
 
 ------------------------------------------------------------------------------
 
+    sugar-next-jedis-mybatis-cache-boot
+    (https://github/ideal-state/sugar-next-jedis-mybatis-cache-boot)
+    Apache License 2.0
+
+------------------------------------------------------------------------------
+
     Spigot-API
     (https://github.com/SpigotMC/Spigot-API)
     GNU GENERAL PUBLIC LICENSE 3.0
