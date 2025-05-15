@@ -18,6 +18,8 @@
 
 package team.idealstate.minecraft.next.spigot.api.placeholder;
 
+import java.util.Collections;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -38,9 +40,6 @@ import team.idealstate.sugar.next.command.CommandResult;
 import team.idealstate.sugar.validate.Validation;
 import team.idealstate.sugar.validate.annotation.NotNull;
 import team.idealstate.sugar.validate.annotation.Nullable;
-
-import java.util.Collections;
-import java.util.Set;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SpigotPlaceholderExpansion extends PlaceholderExpansion {
@@ -148,14 +147,10 @@ public final class SpigotPlaceholderExpansion extends PlaceholderExpansion {
         }
 
         @Override
-        public void removeAttachment(PermissionAttachment attachment) {
-
-        }
+        public void removeAttachment(PermissionAttachment attachment) {}
 
         @Override
-        public void recalculatePermissions() {
-
-        }
+        public void recalculatePermissions() {}
 
         @Override
         public Set<PermissionAttachmentInfo> getEffectivePermissions() {
@@ -168,8 +163,6 @@ public final class SpigotPlaceholderExpansion extends PlaceholderExpansion {
         }
 
         @Override
-        public void setOp(boolean value) {
-
-        }
+        public void setOp(boolean value) {}
     }
 }
