@@ -25,8 +25,12 @@ import lombok.RequiredArgsConstructor;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permissible;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionAttachment;
+import org.bukkit.permissions.PermissionAttachmentInfo;
+import org.bukkit.plugin.Plugin;
 import team.idealstate.minecraft.next.spigot.api.command.SpigotCommandSender;
 import team.idealstate.sugar.next.command.CommandContext;
 import team.idealstate.sugar.next.command.CommandLine;
@@ -34,6 +38,9 @@ import team.idealstate.sugar.next.command.CommandResult;
 import team.idealstate.sugar.validate.Validation;
 import team.idealstate.sugar.validate.annotation.NotNull;
 import team.idealstate.sugar.validate.annotation.Nullable;
+
+import java.util.Collections;
+import java.util.Set;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SpigotPlaceholderExpansion extends PlaceholderExpansion {
@@ -79,16 +86,16 @@ public final class SpigotPlaceholderExpansion extends PlaceholderExpansion {
         if (arguments == null) {
             return super.onRequest(offlinePlayer, params);
         }
-        CommandSender commandSender = null;
+        Permissible permissible = null;
         if (offlinePlayer == null) {
-            commandSender = Bukkit.getConsoleSender();
+            permissible = Bukkit.getConsoleSender();
         } else if (offlinePlayer.isOnline()) {
-            commandSender = offlinePlayer.getPlayer();
+            permissible = offlinePlayer.getPlayer();
         }
-        if (commandSender == null) {
-            return null;
+        if (permissible == null) {
+            permissible = new EmptyPermissible();
         }
-        SpigotCommandSender sender = SpigotCommandSender.of(commandSender);
+        SpigotCommandSender sender = SpigotCommandSender.of(permissible);
         CommandContext context = CommandContext.of(sender);
         CommandResult result = commandLine.execute(context, arguments);
         return result.isSuccess() ? result.getMessage() : null;
@@ -97,5 +104,72 @@ public final class SpigotPlaceholderExpansion extends PlaceholderExpansion {
     @Override
     public String onPlaceholderRequest(Player player, String params) {
         return super.onPlaceholderRequest(player, params);
+    }
+
+    private static class EmptyPermissible implements Permissible {
+        @Override
+        public boolean isPermissionSet(String name) {
+            return false;
+        }
+
+        @Override
+        public boolean isPermissionSet(Permission perm) {
+            return false;
+        }
+
+        @Override
+        public boolean hasPermission(String name) {
+            return false;
+        }
+
+        @Override
+        public boolean hasPermission(Permission perm) {
+            return false;
+        }
+
+        @Override
+        public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value) {
+            return new PermissionAttachment(plugin, this);
+        }
+
+        @Override
+        public PermissionAttachment addAttachment(Plugin plugin) {
+            return new PermissionAttachment(plugin, this);
+        }
+
+        @Override
+        public PermissionAttachment addAttachment(Plugin plugin, String name, boolean value, int ticks) {
+            return new PermissionAttachment(plugin, this);
+        }
+
+        @Override
+        public PermissionAttachment addAttachment(Plugin plugin, int ticks) {
+            return new PermissionAttachment(plugin, this);
+        }
+
+        @Override
+        public void removeAttachment(PermissionAttachment attachment) {
+
+        }
+
+        @Override
+        public void recalculatePermissions() {
+
+        }
+
+        @Override
+        public Set<PermissionAttachmentInfo> getEffectivePermissions() {
+            return Collections.emptySet();
+        }
+
+        @Override
+        public boolean isOp() {
+            return false;
+        }
+
+        @Override
+        public void setOp(boolean value) {
+
+        }
     }
 }
