@@ -72,8 +72,6 @@ subprojects {
         add("api", rootProject.libs.sugar.next.mybatis.boot)
         add("api", rootProject.libs.sugar.next.jedis.mybatis.cache.boot)
 
-        add("runtimeOnly", rootProject.libs.h2)
-
         add("compileOnly", rootProject.libs.lombok)
         add("annotationProcessor", rootProject.libs.lombok)
         add("testCompileOnly", rootProject.libs.lombok)
