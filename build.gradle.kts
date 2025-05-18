@@ -66,7 +66,7 @@ subprojects {
     }
 
     dependencies {
-        add("api", rootProject.libs.sugar.next)
+        add("shadow", rootProject.libs.sugar.next)
         add("api", rootProject.libs.sugar.next.hikaricp.boot)
         add("api", rootProject.libs.sugar.next.jedis.boot)
         add("api", rootProject.libs.sugar.next.mybatis.boot)
