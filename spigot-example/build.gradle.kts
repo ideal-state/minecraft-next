@@ -21,7 +21,7 @@ dependencies {
     @Suppress("VulnerableLibrariesLocal", "RedundantSuppression")
     compileOnly(libs.spigot.api)
     compileOnly(libs.placeholderapi)
-    compileOnly(rootProject.project(":minecraft-next-spigot"))
+    compileOnly(libs.minecraft.next.spigot)
     runtimeOnly(libs.mysql.connector.j)
 }
 
