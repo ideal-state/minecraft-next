@@ -1,0 +1,13 @@
+# noinspection YAMLSchemaValidation
+name: ${name}
+version: '${version}'
+main: team.idealstate.minecraft.next.spigot.ExampleMinecraftNext
+load: STARTUP
+authors:
+- ideal-state
+depend:
+- minecraft-next
+commands:
+  exampleminecraftnext:
+    aliases:
+    - emn

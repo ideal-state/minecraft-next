@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="team.idealstate.minecraft.next.spigot.example.mapper.ExampleEntityMapper">
+
+    <resultMap id="ExampleEntity" type="team.idealstate.minecraft.next.spigot.example.data.ExampleEntity">
+            <id property="uniqueId" column="unique_id" />
+            <result property="name" column="name" />
+            <result property="createdAt" column="created_at" />
+            <result property="updatedAt" column="updated_at" />
+    </resultMap>
+
+    <sql id="AllColumn">
+        <trim prefix="" suffix="" suffixOverrides=",">
+            unique_id,name,created_at,updated_at
+        </trim>
+    </sql>
+
+    <sql id="RequiredColumn">
+        <trim prefix="" suffix="" suffixOverrides=",">
+            unique_id,name
+        </trim>
+    </sql>
+
+    <insert id="createTable">
+        create table if not exists example_entity
+        (
+            unique_id  binary(16) primary key,
+            name       varchar(36),
+            created_at timestamp not null default current_timestamp(),
+            updated_at timestamp not null default current_timestamp() on update current_timestamp()
+        )
+    </insert>
+    
+    <select id="ping" resultType="java.lang.String">
+        select 'PONG'
+    </select>
+    
+    <insert id="insert">
+        -- noinspection SqlInsertValues
+        insert into example_entity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <include refid="RequiredColumn"/>
+        </trim>
+        values (#{uniqueId}, #{name})
+    </insert>
+    
+    <update id="update">
+        update example_entity
+        <set>
+            <if test="name != null">
+                name = #{name},
+            </if>
+        </set>
+        where unique_id = #{uniqueId}
+    </update>
+    
+    <delete id="delete">
+        delete from example_entity
+        where unique_id = #{uniqueId}
+        <if test="name != null">
+            and name = #{name}
+        </if>
+    </delete>
+    
+    <select id="selectOne" resultMap="ExampleEntity">
+        select
+        <include refid="AllColumn"/>
+        from example_entity
+        where unique_id = #{uniqueId}
+        <if test="name != null">
+            and name = #{name}
+        </if>
+        limit 1
+    </select>
+    
+    <select id="selectAll" resultMap="ExampleEntity">
+        select
+        <include refid="AllColumn"/>
+        from example_entity
+    </select>
+    
+    <select id="exists" resultType="java.lang.Boolean">
+        select
+        <trim prefix="count(" suffix=")">
+            1
+        </trim>
+        from example_entity
+        where unique_id = #{uniqueId}
+        <if test="name != null">
+            name = #{name} and
+        </if>
+        limit 1
+    </select>
+    
+    <select id="size" resultType="java.lang.Integer">
+        select
+        <trim prefix="count(" suffix=")">
+            1
+        </trim>
+        from example_entity
+    </select>
+</mapper>
