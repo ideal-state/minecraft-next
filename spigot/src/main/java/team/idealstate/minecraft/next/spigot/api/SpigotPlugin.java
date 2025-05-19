@@ -18,6 +18,8 @@
 
 package team.idealstate.minecraft.next.spigot.api;
 
+import java.io.File;
+import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.command.PluginCommand;
@@ -40,9 +42,6 @@ import team.idealstate.sugar.next.context.Context;
 import team.idealstate.sugar.next.context.ContextHolder;
 import team.idealstate.sugar.next.context.ContextLifecycle;
 import team.idealstate.sugar.next.eventbus.EventBus;
-
-import java.io.File;
-import java.util.List;
 
 public abstract class SpigotPlugin extends JavaPlugin implements ContextHolder, ContextLifecycle {
 
