@@ -18,8 +18,6 @@
 
 package team.idealstate.minecraft.next.spigot.api;
 
-import java.io.File;
-import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.command.PluginCommand;
@@ -34,6 +32,8 @@ import org.bukkit.plugin.java.JavaPluginLoader;
 import team.idealstate.minecraft.next.spigot.api.command.SpigotCommand;
 import team.idealstate.minecraft.next.spigot.api.placeholder.Placeholder;
 import team.idealstate.minecraft.next.spigot.api.placeholder.SpigotPlaceholderExpansion;
+import team.idealstate.sugar.logging.Log;
+import team.idealstate.sugar.logging.Logger;
 import team.idealstate.sugar.next.command.Command;
 import team.idealstate.sugar.next.context.Bean;
 import team.idealstate.sugar.next.context.Context;
@@ -41,7 +41,17 @@ import team.idealstate.sugar.next.context.ContextHolder;
 import team.idealstate.sugar.next.context.ContextLifecycle;
 import team.idealstate.sugar.next.eventbus.EventBus;
 
+import java.io.File;
+import java.util.List;
+
 public abstract class SpigotPlugin extends JavaPlugin implements ContextHolder, ContextLifecycle {
+
+    static {
+        Logger logger = Log.getLogger(SpigotPlugin.class.getClassLoader());
+        if (logger != null) {
+            Log.setLogger(logger);
+        }
+    }
 
     private final Context context = Context.of(this, this, EventBus.instance());
 
