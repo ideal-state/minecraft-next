@@ -54,6 +54,11 @@ public abstract class SpigotPlugin extends JavaPlugin implements ContextHolder, 
 
     private final Context context = Context.of(this, this, EventBus.instance());
 
+    @Override
+    public final Context getContext() {
+        return context;
+    }
+
     public SpigotPlugin() {
         context.initialize();
     }
