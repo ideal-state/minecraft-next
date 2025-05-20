@@ -86,46 +86,48 @@ subprojects {
         }
     }
 
-    project.extensions.getByName("jreleaser").apply {
-        this as JReleaserExtension
-        deploy {
-            maven {
-                mavenCentral {
-                    create("release") {
-                        active.set(Active.RELEASE)
-                        url.set("https://central.sonatype.com/api/v1/publisher")
-                        sign.set(false)
-                        stagingRepository("build/repository")
+    if (!project.name.contains("example")) {
+        project.extensions.getByName("jreleaser").apply {
+            this as JReleaserExtension
+            deploy {
+                maven {
+                    mavenCentral {
+                        create("release") {
+                            active.set(Active.RELEASE)
+                            url.set("https://central.sonatype.com/api/v1/publisher")
+                            sign.set(false)
+                            stagingRepository("build/repository")
+                        }
                     }
-                }
-                nexus2 {
-                    create("snapshot") {
-                        active.set(Active.SNAPSHOT)
-                        url.set("https://central.sonatype.com/repository/maven-snapshots")
-                        snapshotUrl.set("https://central.sonatype.com/repository/maven-snapshots")
-                        sign.set(false)
-                        applyMavenCentralRules.set(true)
-                        snapshotSupported.set(true)
-                        closeRepository.set(true)
-                        releaseRepository.set(true)
-                        verifyPom.set(false)
-                        stagingRepository("build/repository")
+                    nexus2 {
+                        create("snapshot") {
+                            active.set(Active.SNAPSHOT)
+                            url.set("https://central.sonatype.com/repository/maven-snapshots")
+                            snapshotUrl.set("https://central.sonatype.com/repository/maven-snapshots")
+                            sign.set(false)
+                            applyMavenCentralRules.set(true)
+                            snapshotSupported.set(true)
+                            closeRepository.set(true)
+                            releaseRepository.set(true)
+                            verifyPom.set(false)
+                            stagingRepository("build/repository")
+                        }
                     }
                 }
             }
         }
-    }
 
-    tasks.register("doDeploy") {
-        dependsOn(tasks.named("test"))
-        dependsOn(tasks.named("publishAllPublicationsToProjectRepository"))
-        finalizedBy(tasks.named("jreleaserDeploy"))
-    }
+        tasks.register("doDeploy") {
+            dependsOn(tasks.named("test"))
+            dependsOn(tasks.named("publishAllPublicationsToProjectRepository"))
+            finalizedBy(tasks.named("jreleaserDeploy"))
+        }
 
-    tasks.register("deploy") {
-        group = "glass"
-        dependsOn(tasks.named("clean"))
-        dependsOn(tasks.named("spotlessApply"))
-        finalizedBy(tasks.named("doDeploy"))
+        tasks.register("deploy") {
+            group = "glass"
+            dependsOn(tasks.named("clean"))
+            dependsOn(tasks.named("spotlessApply"))
+            finalizedBy(tasks.named("doDeploy"))
+        }
     }
 }
