@@ -49,7 +49,6 @@ public class ExampleEntityService implements Initializable {
     @Transaction
     public String ping() {
         String tableName = ExampleEntity.class.getSimpleName();
-        ExampleEntityMapper mapper = getMapper();
         mapper.selectAll().stream().map(String::valueOf).forEach(Log::info);
         ExampleEntity record = new ExampleEntity();
         for (String name : NAMES) {
@@ -77,16 +76,10 @@ public class ExampleEntityService implements Initializable {
         this.mapper = mapper;
     }
 
-    @NotNull
-    private ExampleEntityMapper getMapper() {
-        return Validation.requireNotNull(mapper, "Mapper must not be null.");
-    }
-
     @Override
     @Transaction(executionMode = MyBatis.EXECUTION_MODE_BATCH, isolationLevel = MyBatis.ISOLATION_LEVEL_SERIALIZABLE)
     public void initialize() {
         String tableName = ExampleEntity.class.getSimpleName();
-        ExampleEntityMapper mapper = getMapper();
         mapper.createTable();
         ExampleEntity record = new ExampleEntity();
         for (String name : NAMES) {

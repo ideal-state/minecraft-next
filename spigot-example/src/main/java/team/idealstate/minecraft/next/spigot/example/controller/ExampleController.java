@@ -52,13 +52,13 @@ public class ExampleController implements ContextHolderAware, Command, Placehold
     @CommandHandler
     public CommandResult ping() {
         Log.info("ping()");
-        return CommandResult.success(String.valueOf(getService().ping()));
+        return CommandResult.success(String.valueOf(service.ping()));
     }
 
     @CommandHandler
     public CommandResult show() {
         Log.info("show()");
-        return CommandResult.success(getConfiguration().toString());
+        return CommandResult.success(configuration.toString());
     }
 
     @CommandHandler("show {message}")
@@ -134,17 +134,7 @@ public class ExampleController implements ContextHolderAware, Command, Placehold
         this.configuration = configuration;
     }
 
-    @NotNull
-    private ExampleConfiguration getConfiguration() {
-        return Validation.requireNotNull(configuration, "Configuration must not be null.");
-    }
-
     private volatile ExampleEntityService service;
-
-    @NotNull
-    private ExampleEntityService getService() {
-        return Validation.requireNotNull(service, "Service must not be null.");
-    }
 
     @Autowired
     public void setService(@NotNull ExampleEntityService service) {
