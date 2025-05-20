@@ -16,7 +16,7 @@
  *    along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package team.idealstate.minecraft.next.spigot;
+package team.idealstate.minecraft.next.spigot.example;
 
 import team.idealstate.minecraft.next.spigot.api.SpigotPlugin;
 import team.idealstate.sugar.next.boot.hikaricp.annotation.EnableHikariCP;
