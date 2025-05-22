@@ -19,6 +19,7 @@
 package team.idealstate.minecraft.next.spigot.api.placeholder;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -37,6 +38,7 @@ import team.idealstate.minecraft.next.spigot.api.command.SpigotCommandSender;
 import team.idealstate.sugar.next.command.CommandContext;
 import team.idealstate.sugar.next.command.CommandLine;
 import team.idealstate.sugar.next.command.CommandResult;
+import team.idealstate.sugar.next.command.annotation.CommandArgument;
 import team.idealstate.sugar.validate.Validation;
 import team.idealstate.sugar.validate.annotation.NotNull;
 import team.idealstate.sugar.validate.annotation.Nullable;
@@ -63,11 +65,19 @@ public final class SpigotPlaceholderExpansion extends PlaceholderExpansion {
     @Getter
     private final CommandLine commandLine;
 
+    @NonNull
+    private final List<CommandArgument.Converter<?>> converters;
+
     public static SpigotPlaceholderExpansion of(
-            @NotNull String identifier, @NotNull String author, @NotNull String version, @NotNull Object command) {
+            @NotNull String identifier,
+            @NotNull String author,
+            @NotNull String version,
+            @NotNull Object command,
+            @NotNull List<CommandArgument.Converter<?>> converters) {
         Validation.notNull(command, "command must not be null.");
-        ;
-        return new SpigotPlaceholderExpansion(identifier, author, version, CommandLine.of(identifier, command));
+        Validation.notNull(converters, "converters must not be null.");
+        return new SpigotPlaceholderExpansion(
+                identifier, author, version, CommandLine.of(identifier, command), converters);
     }
 
     @Nullable
@@ -80,6 +90,7 @@ public final class SpigotPlaceholderExpansion extends PlaceholderExpansion {
     }
 
     @Override
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public String onRequest(OfflinePlayer offlinePlayer, String params) {
         String[] arguments = argumentsOf(params);
         if (arguments == null) {
@@ -96,12 +107,15 @@ public final class SpigotPlaceholderExpansion extends PlaceholderExpansion {
         }
         SpigotCommandSender sender = SpigotCommandSender.of(permissible);
         CommandContext context = CommandContext.of(sender);
+        for (CommandArgument.Converter converter : converters) {
+            context.setConverter(converter.getTargetType(), converter);
+        }
         CommandResult result = commandLine.execute(context, arguments);
         return result.isSuccess() ? result.getMessage() : null;
     }
 
     @Override
-    public String onPlaceholderRequest(Player player, String params) {
+    public String onPlaceholderRequest(Player player, @NotNull String params) {
         return super.onPlaceholderRequest(player, params);
     }
 

@@ -19,7 +19,9 @@
 package team.idealstate.minecraft.next.spigot.api;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.command.PluginCommand;
@@ -37,11 +39,13 @@ import team.idealstate.minecraft.next.spigot.api.placeholder.SpigotPlaceholderEx
 import team.idealstate.sugar.logging.Log;
 import team.idealstate.sugar.logging.Logger;
 import team.idealstate.sugar.next.command.Command;
+import team.idealstate.sugar.next.command.annotation.CommandArgument.Converter;
 import team.idealstate.sugar.next.context.Bean;
 import team.idealstate.sugar.next.context.Context;
 import team.idealstate.sugar.next.context.ContextHolder;
 import team.idealstate.sugar.next.context.ContextLifecycle;
 import team.idealstate.sugar.next.eventbus.EventBus;
+import team.idealstate.sugar.validate.annotation.NotNull;
 
 public abstract class SpigotPlugin extends JavaPlugin implements ContextHolder, ContextLifecycle {
 
@@ -80,13 +84,15 @@ public abstract class SpigotPlugin extends JavaPlugin implements ContextHolder, 
     }
 
     @Override
+    @SuppressWarnings("rawtypes")
     public final void onEnable() {
         super.onEnable();
         context.enable();
         PluginManager pluginManager = getServer().getPluginManager();
         registerEventListeners(pluginManager);
-        registerCommands();
-        hookPlaceholderAPI(pluginManager);
+        List<Bean<Converter>> converters = context.getBeans(Converter.class);
+        registerCommands(converters);
+        hookPlaceholderAPI(pluginManager, converters);
     }
 
     @Override
@@ -106,10 +112,17 @@ public abstract class SpigotPlugin extends JavaPlugin implements ContextHolder, 
         }
     }
 
-    private void registerCommands() {
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private void registerCommands(@NotNull List<Bean<Converter>> converters) {
         List<Bean<Command>> beans = context.getBeans(Command.class);
         if (beans.isEmpty()) {
             return;
+        }
+        List converterList;
+        if (converters.isEmpty()) {
+            converterList = Collections.emptyList();
+        } else {
+            converterList = converters.stream().map(Bean::getInstance).collect(Collectors.toList());
         }
         for (Bean<Command> bean : beans) {
             String name = bean.getName();
@@ -117,14 +130,15 @@ public abstract class SpigotPlugin extends JavaPlugin implements ContextHolder, 
             if (pluginCommand == null) {
                 continue;
             }
-            SpigotCommand spigotCommand = SpigotCommand.of(name, bean.getInstance());
+            SpigotCommand spigotCommand = SpigotCommand.of(name, bean.getInstance(), converterList);
             pluginCommand.setExecutor(spigotCommand);
             pluginCommand.setTabCompleter(spigotCommand);
         }
     }
 
-    private void hookPlaceholderAPI(PluginManager pluginManager) {
-        pluginManager.registerEvents(new PlaceholderAPIHook(context), this);
+    @SuppressWarnings("rawtypes")
+    private void hookPlaceholderAPI(PluginManager pluginManager, @NotNull List<Bean<Converter>> converters) {
+        pluginManager.registerEvents(new PlaceholderAPIHook(context, converters), this);
     }
 
     @RequiredArgsConstructor
@@ -134,6 +148,11 @@ public abstract class SpigotPlugin extends JavaPlugin implements ContextHolder, 
         @NonNull
         private final Context context;
 
+        @NonNull
+        @SuppressWarnings("rawtypes")
+        private final List<Bean<Converter>> converters;
+
+        @SuppressWarnings({"unchecked", "rawtypes"})
         @EventHandler(priority = EventPriority.LOWEST)
         public void onPlaceholderAPIEnabled(PluginEnableEvent event) {
             if (PLACEHOLDER_API.equals(event.getPlugin().getName())) {
@@ -141,10 +160,16 @@ public abstract class SpigotPlugin extends JavaPlugin implements ContextHolder, 
                 if (beans.isEmpty()) {
                     return;
                 }
+                List converterList;
+                if (converters.isEmpty()) {
+                    converterList = Collections.emptyList();
+                } else {
+                    converterList = converters.stream().map(Bean::getInstance).collect(Collectors.toList());
+                }
                 String author = context.getName();
                 String version = context.getVersion();
                 for (Bean<Placeholder> bean : beans) {
-                    SpigotPlaceholderExpansion.of(bean.getName(), author, version, bean.getInstance())
+                    SpigotPlaceholderExpansion.of(bean.getName(), author, version, bean.getInstance(), converterList)
                             .register();
                 }
             }
