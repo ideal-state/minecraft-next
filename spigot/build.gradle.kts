@@ -2,7 +2,6 @@ glass {
     application {
         sugar {
             enabled.set(true)
-            into.set("./plugins/")
         }
     }
 }
