@@ -20,6 +20,8 @@ package team.idealstate.minecraft.next.spigot.example;
 
 import team.idealstate.minecraft.next.spigot.api.SpigotPlugin;
 import team.idealstate.sugar.next.boot.hikaricp.annotation.EnableHikariCP;
+import team.idealstate.sugar.next.boot.jackson.annotation.EnableGeneralCodec;
+import team.idealstate.sugar.next.boot.jackson.annotation.EnableJacksonYaml;
 import team.idealstate.sugar.next.boot.jedis.annotation.EnableJedis;
 import team.idealstate.sugar.next.boot.jedis.mybatis.cache.annotation.EnableJedisMyBatisCache;
 import team.idealstate.sugar.next.boot.mybatis.annotation.EnableMyBatis;
@@ -28,6 +30,8 @@ import team.idealstate.sugar.next.context.annotation.feature.EnableSugar;
 import team.idealstate.sugar.validate.annotation.NotNull;
 
 @EnableSugar
+@EnableGeneralCodec
+@EnableJacksonYaml
 @EnableHikariCP
 @EnableJedis
 @EnableMyBatis
