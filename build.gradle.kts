@@ -69,6 +69,7 @@ subprojects {
         if (!project.name.contains("example")) {
             add("shadow", rootProject.libs.sugar.next)
         }
+        add("api", rootProject.libs.sugar.next.jackson.boot)
         add("api", rootProject.libs.sugar.next.hikaricp.boot)
         add("api", rootProject.libs.sugar.next.jedis.boot)
         add("api", rootProject.libs.sugar.next.mybatis.boot)
