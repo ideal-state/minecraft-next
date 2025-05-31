@@ -66,7 +66,7 @@ public final class SpigotCommand implements TabExecutor {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] arguments) {
         SpigotCommandSender sender = SpigotCommandSender.of(commandSender);
-        CommandContext context = CommandContext.of(sender);
+        CommandContext context = CommandContext.of(sender, arguments);
         for (Converter converter : converters) {
             context.setConverter(converter.getTargetType(), converter);
         }
@@ -85,7 +85,7 @@ public final class SpigotCommand implements TabExecutor {
     @SuppressWarnings({"rawtypes", "unchecked"})
     public List<String> onTabComplete(CommandSender commandSender, Command command, String label, String[] arguments) {
         SpigotCommandSender sender = SpigotCommandSender.of(commandSender);
-        CommandContext context = CommandContext.of(sender);
+        CommandContext context = CommandContext.of(sender, arguments);
         for (Converter converter : converters) {
             context.setConverter(converter.getTargetType(), converter);
         }
